@@ -1,5 +1,6 @@
 package com.hceris.crud.products;
 
+import com.hceris.crud.products.form.CreateForm;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -58,5 +59,13 @@ public class ProductsController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Creates a new product and returns its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Success"),
+            @ApiResponse(code = 400, message = "Provided values are incorrect"),
+    })
+    public ResponseEntity<Long> create(@RequestBody CreateForm form) {
+        return ResponseEntity.badRequest().build();
+    }
 }

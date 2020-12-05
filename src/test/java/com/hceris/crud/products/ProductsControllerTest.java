@@ -1,5 +1,6 @@
 package com.hceris.crud.products;
 
+import com.hceris.crud.Utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -62,5 +63,15 @@ class ProductsControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
         verify(repository, times(1)).softDelete(product.getId());
+    }
+
+    @Test
+    public void createCreatesANewProduct() throws Exception {
+        String form = Utils.getResourceFileAsString("create_form.json");
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(form))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }
