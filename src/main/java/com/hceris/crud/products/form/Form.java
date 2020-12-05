@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Value
-public class CreateForm {
+public class Form {
     String name;
     BigDecimal price;
 

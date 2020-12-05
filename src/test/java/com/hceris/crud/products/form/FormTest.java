@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CreateFormTest {
+class FormTest {
 
-    CreateForm form = new CreateForm("product", BigDecimal.TEN);
+    Form form = new Form("product", BigDecimal.TEN);
 
     @Test
     void asProductSetsCreatedAt() {
@@ -22,20 +22,20 @@ class CreateFormTest {
 
     @Test
     void validateRejectsNullName() {
-        assertThat(new CreateForm(null, BigDecimal.TEN).validate()).isFalse();
+        assertThat(new Form(null, BigDecimal.TEN).validate()).isFalse();
     }
 
     @Test
     void validateRejectsEmptyName() {
-        assertThat(new CreateForm("", BigDecimal.TEN).validate()).isFalse();
+        assertThat(new Form("", BigDecimal.TEN).validate()).isFalse();
     }
 
     @Test
     void validateRejectsEmptyPrice() {
-        assertThat(new CreateForm("product", null).validate()).isFalse();
+        assertThat(new Form("product", null).validate()).isFalse();
     }
     @Test
     void validateRejectsNegativePrice() {
-        assertThat(new CreateForm("product", BigDecimal.valueOf(-1)).validate()).isFalse();
+        assertThat(new Form("product", BigDecimal.valueOf(-1)).validate()).isFalse();
     }
 }

@@ -1,6 +1,6 @@
 package com.hceris.crud.products;
 
-import com.hceris.crud.products.form.CreateForm;
+import com.hceris.crud.products.form.Form;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -65,7 +65,7 @@ public class ProductsController {
             @ApiResponse(code = 201, message = "Success"),
             @ApiResponse(code = 400, message = "Provided values are incorrect"),
     })
-    public ResponseEntity<Long> create(@RequestBody CreateForm form) {
+    public ResponseEntity<Long> create(@RequestBody Form form) {
         if (!form.validate()) {
             return ResponseEntity.status(400).build();
         }
@@ -83,7 +83,7 @@ public class ProductsController {
             @ApiResponse(code = 400, message = "Provided values are incorrect"),
             @ApiResponse(code = 404, message = "Product with given id doesn't exist"),
     })
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody CreateForm form) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Form form) {
         return ResponseEntity.status(404).build();
     }
 }

@@ -1,7 +1,7 @@
 package com.hceris.crud.products;
 
 import com.hceris.crud.Utils;
-import com.hceris.crud.products.form.CreateForm;
+import com.hceris.crud.products.form.Form;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,7 +29,7 @@ class ProductsControllerTest {
     Product product = new Product(1L, "test_product", BigDecimal.valueOf(1), LocalDate.now(), false);
     Product other = new Product(2L, "second_product", BigDecimal.valueOf(10), LocalDate.now(), false);
 
-    CreateForm form = new CreateForm("new_product", BigDecimal.valueOf(25));
+    Form form = new Form("new_product", BigDecimal.valueOf(25));
     Product newProduct = new Product(4L, form.getName(), form.getPrice(), LocalDate.now(), false);
 
     @Test
@@ -71,7 +71,7 @@ class ProductsControllerTest {
 
     @Test
     public void createReturns400IfFormInvalid() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("invalid_create_form.json");
+        String rawForm = Utils.getResourceFileAsString("invalid_form.json");
         when(repository.save(any(Product.class))).thenReturn(newProduct);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
@@ -82,7 +82,7 @@ class ProductsControllerTest {
 
     @Test
     public void createCreatesANewProduct() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("create_form.json");
+        String rawForm = Utils.getResourceFileAsString("form.json");
         when(repository.save(any(Product.class))).thenReturn(newProduct);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
@@ -94,7 +94,7 @@ class ProductsControllerTest {
 
     @Test
     public void updateReturns404IfProductDoesntExist() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("create_form.json");
+        String rawForm = Utils.getResourceFileAsString("form.json");
         when(repository.findById(0L)).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/rest/products/0")
