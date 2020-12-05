@@ -96,4 +96,16 @@ public class ProductsController {
         product.ifPresent(p -> repository.save(form.merge(p)));
         return ResponseEntity.noContent().build();
     }
+
+    /**
+     * This is a blanket catch-all exception to avoid showing 500s to the client
+     * <p>
+     * It's there only for prevention reasons. Exceptions should be handled in the right layers.
+     * Should cover things like DB being down or others where there is no concrete handling plan.
+     * </p>
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Void> handleException(Exception e) {
+        return ResponseEntity.status(502).build();
+    }
 }
