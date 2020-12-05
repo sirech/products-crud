@@ -20,4 +20,16 @@ public class CreateForm {
                 .deleted(false)
                 .build();
     }
+
+    public boolean validate() {
+        if (name.isBlank()) {
+            return false;
+        }
+
+        if (price.compareTo(BigDecimal.ZERO) < 0) {
+            return false;
+        }
+
+        return true;
+    }
 }

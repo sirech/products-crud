@@ -19,4 +19,19 @@ class CreateFormTest {
     void asProductSetsDeleted() {
         assertThat(form.asProduct().getDeleted()).isFalse();
     }
+
+    @Test
+    void validateRejectsNullName() {
+        assertThat(new CreateForm(null, BigDecimal.TEN).validate()).isFalse();
+    }
+
+    @Test
+    void validateRejectsEmptyName() {
+        assertThat(new CreateForm("", BigDecimal.TEN).validate()).isFalse();
+    }
+
+    @Test
+    void validateRejectsNegativePrice() {
+        assertThat(new CreateForm("product", BigDecimal.valueOf(-1)).validate()).isFalse();
+    }
 }
