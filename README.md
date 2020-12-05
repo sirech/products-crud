@@ -18,6 +18,10 @@ The `go` script provides all the targets required. Run it without arguments to g
 ./go test-unit
 ```
 
+## Documentation
+
+The API is documented with [Swagger](https://swagger.io/). To check it, run the application and open the [entry page](http://localhost:8080/swagger-ui/)
+
 ## License
 
 See [LICENSE](./LICENSE)

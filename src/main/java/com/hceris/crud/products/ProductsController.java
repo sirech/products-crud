@@ -1,5 +1,9 @@
 package com.hceris.crud.products;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +24,14 @@ public class ProductsController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Product> product(@PathVariable Long id) {
+    @ApiOperation("Gets a product")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 404, message = "Product with given id doesn't exist"),
+    })
+    public ResponseEntity<Product> product(
+            @ApiParam(value = "id of the product", required = true)
+            @PathVariable Long id) {
         Optional<Product> product = repository.findById(id);
 
         return product
