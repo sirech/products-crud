@@ -10,6 +10,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+/**
+ * This tests are there to make sure the whole flow of the past is tested end to end.
+ * <p>
+ * We don't want to repeat testing conditions that have been tested in lower level tests. That's why it only checks for
+ * the response codes of the routes.
+ * </p>
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ProductsControllerIntegrationTest {
@@ -18,8 +25,22 @@ public class ProductsControllerIntegrationTest {
     MockMvc mockMvc;
 
     @Test
+    public void product() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(String.format("/rest/products/%d", 1L))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void products() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/rest/products")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     public void softDelete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/rest/products/%d", 1L))
+        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/rest/products/%d", 2L))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
@@ -31,5 +52,14 @@ public class ProductsControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(rawForm))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    @Test
+    public void update() throws Exception {
+        String rawForm = Utils.getResourceFileAsString("form.json");
+        mockMvc.perform(MockMvcRequestBuilders.put(String.format("/rest/products/%d", 1L))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(rawForm))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }
