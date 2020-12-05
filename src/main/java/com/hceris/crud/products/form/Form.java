@@ -21,6 +21,17 @@ public class Form {
                 .build();
     }
 
+    public Product merge(Product original) {
+        return Product
+                .builder()
+                .id(original.getId())
+                .createdAt(original.getCreatedAt())
+                .name(name)
+                .price(price)
+                .deleted(original.getDeleted())
+                .build();
+    }
+
     public boolean validate() {
         if (name == null || name.isBlank()) {
             return false;
