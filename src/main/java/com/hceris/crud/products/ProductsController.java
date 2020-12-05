@@ -84,8 +84,11 @@ public class ProductsController {
             @ApiResponse(code = 404, message = "Product with given id doesn't exist"),
     })
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Form form) {
-        Optional<Product> product = repository.findById(id);
+        if (!form.validate()) {
+            return ResponseEntity.badRequest().build();
+        }
 
+        Optional<Product> product = repository.findById(id);
         if (product.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

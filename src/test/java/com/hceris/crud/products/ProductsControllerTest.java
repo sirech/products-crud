@@ -106,6 +106,17 @@ class ProductsControllerTest {
     }
 
     @Test
+    public void updateReturns400IfFormInvalid() throws Exception {
+        String rawForm = Utils.getResourceFileAsString("invalid_form.json");
+        when(repository.findById(product.getId())).thenReturn(Optional.of(product));
+
+        mockMvc.perform(MockMvcRequestBuilders.put(String.format("/rest/products/%d", product.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(rawForm))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
     public void updateChangesAProduct() throws Exception {
         String rawForm = Utils.getResourceFileAsString("form.json");
         when(repository.findById(product.getId())).thenReturn(Optional.of(product));
