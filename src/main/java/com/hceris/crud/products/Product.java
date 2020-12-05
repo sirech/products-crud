@@ -3,6 +3,7 @@ package com.hceris.crud.products;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

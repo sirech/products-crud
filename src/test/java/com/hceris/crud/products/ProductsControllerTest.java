@@ -1,6 +1,7 @@
 package com.hceris.crud.products;
 
 import com.hceris.crud.Utils;
+import com.hceris.crud.products.form.CreateForm;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,6 +28,9 @@ class ProductsControllerTest {
 
     Product product = new Product(1L, "test_product", BigDecimal.valueOf(1), LocalDate.now(), false);
     Product other = new Product(2L, "second_product", BigDecimal.valueOf(10), LocalDate.now(), false);
+
+    CreateForm form = new CreateForm("new_product", BigDecimal.valueOf(25));
+    Product newProduct = new Product(4L, form.getName(), form.getPrice(), LocalDate.now(), false);
 
     @Test
     public void productReturns404IfProductDoesntExist() throws Exception {
@@ -67,11 +71,13 @@ class ProductsControllerTest {
 
     @Test
     public void createCreatesANewProduct() throws Exception {
-        String form = Utils.getResourceFileAsString("create_form.json");
+        String rawForm = Utils.getResourceFileAsString("create_form.json");
+        when(repository.save(any(Product.class))).thenReturn(newProduct);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(form))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .content(rawForm))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().string(newProduct.getId().toString()));
     }
 }

@@ -66,6 +66,7 @@ public class ProductsController {
             @ApiResponse(code = 400, message = "Provided values are incorrect"),
     })
     public ResponseEntity<Long> create(@RequestBody CreateForm form) {
-        return ResponseEntity.badRequest().build();
+        Product product = repository.save(form.asProduct());
+        return ResponseEntity.status(201).body(product.getId());
     }
 }
