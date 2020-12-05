@@ -14,10 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * It doesn't really test any functionality implemented by us.
  */
 @DataJpaTest
-class ProductRepositoryTest {
+class ProductsRepositoryTest {
 
     @Autowired
-    ProductRepository repository;
+    ProductsRepository repository;
 
     @Test
     void findReturnsEmptyOptionalIfDoesntExist() {
