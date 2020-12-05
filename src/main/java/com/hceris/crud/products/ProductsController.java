@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +46,15 @@ public class ProductsController {
                 .stream(repository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(products);
+    }
+
+    @DeleteMapping("{id}")
+    @ApiOperation(value = "Deletes a product. The product won't be removed from the database", code = 204, response = Void.class)
+    @ApiResponse(code = 204, message = "Success")
+    public ResponseEntity<Product> softDelete(
+            @ApiParam(value = "id of the product", required = true)
+            @PathVariable Long id) {
+        return ResponseEntity.noContent().build();
     }
 
 

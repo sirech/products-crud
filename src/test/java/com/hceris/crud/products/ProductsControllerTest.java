@@ -54,4 +54,13 @@ class ProductsControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("second_product"));
     }
+
+    @Test
+    public void softDeleteMarksAProductAsDeleted() throws Exception {
+        when(repository.findById(product.getId())).thenReturn(Optional.of(product));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/rest/products/%d", product.getId()))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }
