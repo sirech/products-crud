@@ -51,4 +51,11 @@ class ProductsRepositoryTest {
         Iterable<Product> products = repository.findAll();
         assertThat(products).isNotEmpty();
     }
+
+    @Test
+    void softDeleteSetsDeletedFlag() {
+        assertThat(repository.findById(1L)).isNotEmpty();
+        repository.softDelete(1L);
+        assertThat(repository.findById(1L)).isEmpty();
+    }
 }
