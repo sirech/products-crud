@@ -22,11 +22,11 @@ public class CreateForm {
     }
 
     public boolean validate() {
-        if (name.isBlank()) {
+        if (name == null || name.isBlank()) {
             return false;
         }
 
-        if (price.compareTo(BigDecimal.ZERO) < 0) {
+        if (price == null || price.compareTo(BigDecimal.ZERO) < 0) {
             return false;
         }
 

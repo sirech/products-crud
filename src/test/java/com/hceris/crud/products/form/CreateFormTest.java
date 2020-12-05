@@ -31,6 +31,10 @@ class CreateFormTest {
     }
 
     @Test
+    void validateRejectsEmptyPrice() {
+        assertThat(new CreateForm("product", null).validate()).isFalse();
+    }
+    @Test
     void validateRejectsNegativePrice() {
         assertThat(new CreateForm("product", BigDecimal.valueOf(-1)).validate()).isFalse();
     }
