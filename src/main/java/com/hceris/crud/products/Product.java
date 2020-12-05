@@ -1,5 +1,6 @@
 package com.hceris.crud.products;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Product {
     @Column
     private BigDecimal price;
 
-    @Column()
+    @Column(name = "created_at")
+    @JsonProperty("created_at")
     private LocalDate createdAt;
 }
