@@ -54,6 +54,7 @@ public class ProductsController {
     public ResponseEntity<Product> softDelete(
             @ApiParam(value = "id of the product", required = true)
             @PathVariable Long id) {
+        repository.softDelete(id);
         return ResponseEntity.noContent().build();
     }
 

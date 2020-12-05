@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @WebMvcTest
 class ProductsControllerTest {
@@ -57,10 +57,10 @@ class ProductsControllerTest {
 
     @Test
     public void softDeleteMarksAProductAsDeleted() throws Exception {
-        when(repository.findById(product.getId())).thenReturn(Optional.of(product));
-
         mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/rest/products/%d", product.getId()))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        verify(repository, times(1)).softDelete(product.getId());
     }
 }
