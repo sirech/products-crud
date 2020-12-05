@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,9 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJpaTest
 class ProductsRepositoryTest {
-
     @Autowired
     ProductsRepository repository;
+
+    Product product = new Product(null, "new_product", BigDecimal.valueOf(1), LocalDate.now(), false);
 
     @Test
     void findReturnsEmptyIfDoesntExist() {
@@ -57,5 +60,12 @@ class ProductsRepositoryTest {
         assertThat(repository.findById(1L)).isNotEmpty();
         repository.softDelete(1L);
         assertThat(repository.findById(1L)).isEmpty();
+    }
+
+    @Test
+    void createInsertsANewProduct() {
+        long count = repository.count();
+        repository.save(product);
+        assertThat(repository.count()).isEqualTo(count + 1);
     }
 }
