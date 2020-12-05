@@ -31,4 +31,10 @@ class ProductsRepositoryTest {
         assertThat(product).isNotEmpty();
         assertThat(product.get().getName()).isEqualTo("test_product");
     }
+
+    @Test
+    void findAllReturnsAList() {
+        Iterable<Product> products = repository.findAll();
+        assertThat(products).isNotEmpty();
+    }
 }

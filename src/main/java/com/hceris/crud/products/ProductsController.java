@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping(value = "/rest/products", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,4 +41,15 @@ public class ProductsController {
                 .map(p -> ResponseEntity.ok(p))
                 .orElse(ResponseEntity.status(404).build());
     }
+
+    @GetMapping("")
+    @ApiOperation("Gets all products")
+    public ResponseEntity<List<Product>> products() {
+        List<Product> products = StreamSupport
+                .stream(repository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(products);
+    }
+
+
 }
