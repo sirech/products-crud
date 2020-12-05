@@ -24,8 +24,8 @@ class ProductsControllerTest {
     @MockBean
     ProductsRepository repository;
 
-    Product product = new Product(1L, "test_product", BigDecimal.valueOf(1), LocalDate.now());
-    Product other = new Product(2L, "second_product", BigDecimal.valueOf(10), LocalDate.now());
+    Product product = new Product(1L, "test_product", BigDecimal.valueOf(1), LocalDate.now(), false);
+    Product other = new Product(2L, "second_product", BigDecimal.valueOf(10), LocalDate.now(), false);
 
     @Test
     public void productReturns404IfProductDoesntExist() throws Exception {
