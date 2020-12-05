@@ -18,7 +18,14 @@ public class ProductsControllerIntegrationTest {
     MockMvc mockMvc;
 
     @Test
-    public void createCreatesANewProduct() throws Exception {
+    public void softDelete() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/rest/products/%d", 1L))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void create() throws Exception {
         String rawForm = Utils.getResourceFileAsString("create_form.json");
         mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
                 .contentType(MediaType.APPLICATION_JSON)

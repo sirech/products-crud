@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 public interface ProductsRepository extends CrudRepository<Product, Long> {
@@ -17,5 +18,6 @@ public interface ProductsRepository extends CrudRepository<Product, Long> {
 
     @Query("update #{#entityName} e set e.deleted = true where e.id = ?1")
     @Modifying
+    @Transactional
     void softDelete(Long id);
 }
