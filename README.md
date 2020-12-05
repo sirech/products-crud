@@ -45,7 +45,7 @@ The products are not deleted from the database, but only marked as such. All oth
 
 ## Known issues
 
-- The price is being serialized in JSON as a number, even though we store internally in `BigDecimal`. To fix that, a custom serializer is missing that forces the price to be handled in JSON as a string to avoid losing precision.
+- The price is being serialized in JSON as a number, even though we store it internally in `BigDecimal`. To fix that, a custom serializer is missing. It should force the price to be handled in JSON as a string to avoid losing precision.
 - The Swagger overview is listing some return codes that don't actually happen due to some default configuration somewhere. 
 - The validations for create and update are shared. This means that we cannot update just one field in a product. We can split the validation in two different objects or allow non-existing values for the update to prevent this.
 - Listing products doesn't support pagination.
