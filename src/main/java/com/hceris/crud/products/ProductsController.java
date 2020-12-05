@@ -73,4 +73,17 @@ public class ProductsController {
         Product product = repository.save(form.asProduct());
         return ResponseEntity.status(201).body(product.getId());
     }
+
+    // It's a bit debatable whether this should be a PUT or a POST.
+    // The updated_at will get changed, so it doesn't quite fulfill the PUT semantics 100%
+    @PutMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Updates an existing product")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Success"),
+            @ApiResponse(code = 400, message = "Provided values are incorrect"),
+            @ApiResponse(code = 404, message = "Product with given id doesn't exist"),
+    })
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody CreateForm form) {
+        return ResponseEntity.status(404).build();
+    }
 }

@@ -91,4 +91,15 @@ class ProductsControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string(newProduct.getId().toString()));
     }
+
+    @Test
+    public void updateReturns404IfProductDoesntExist() throws Exception {
+        String rawForm = Utils.getResourceFileAsString("create_form.json");
+        when(repository.findById(0L)).thenReturn(Optional.empty());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/rest/products/0")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(rawForm))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }
