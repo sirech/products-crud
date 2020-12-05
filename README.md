@@ -39,6 +39,8 @@ There is only one main package (`products`). Extra domain with its own REST rout
 
 For the domain entities, they serve the dual purpose of being serialized to JSON and used with interactions with the database. As complexity grows, it would make sense to split them to avoid having too much logic in one place.
 
+Before being inserted into the database through an update or create, there are some simple validations to prevent broken products from being introduced. The logic is not very comprehensive (duplicated product names are accepted, for instance)
+
 ### Deleted products
 
 The products are not deleted from the database, but only marked as such. All other routes ignore those products, so from the outside it's as if they don't exist anymore.
