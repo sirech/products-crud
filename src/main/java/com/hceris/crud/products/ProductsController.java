@@ -37,7 +37,7 @@ public class ProductsController {
 
         return product
                 .map(p -> ResponseEntity.ok(p))
-                .orElse(ResponseEntity.status(404).build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("")
@@ -67,7 +67,7 @@ public class ProductsController {
     })
     public ResponseEntity<Long> create(@RequestBody Form form) {
         if (!form.validate()) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().build();
         }
 
         Product product = repository.save(form.asProduct());
@@ -84,6 +84,13 @@ public class ProductsController {
             @ApiResponse(code = 404, message = "Product with given id doesn't exist"),
     })
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Form form) {
-        return ResponseEntity.status(404).build();
+        Optional<Product> product = repository.findById(id);
+
+        if (product.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        product.ifPresent(p -> repository.save(form.merge(p)));
+        return ResponseEntity.noContent().build();
     }
 }

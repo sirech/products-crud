@@ -3,6 +3,7 @@ package com.hceris.crud.products;
 import com.hceris.crud.Utils;
 import com.hceris.crud.products.form.Form;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @WebMvcTest
@@ -101,5 +103,22 @@ class ProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(rawForm))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void updateChangesAProduct() throws Exception {
+        String rawForm = Utils.getResourceFileAsString("form.json");
+        when(repository.findById(product.getId())).thenReturn(Optional.of(product));
+
+        mockMvc.perform(MockMvcRequestBuilders.put(String.format("/rest/products/%d", product.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(rawForm))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        ArgumentCaptor<Product> capture = ArgumentCaptor.forClass(Product.class);
+        verify(repository, times(1)).save(capture.capture());
+        Product result = capture.getValue();
+
+        assertThat(result.getName()).isEqualTo("new_product");
     }
 }
