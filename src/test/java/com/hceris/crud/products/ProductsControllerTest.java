@@ -32,7 +32,7 @@ class ProductsControllerTest {
     @MockBean
     ProductsRepository repository;
 
-    Product product = new Product(1L, "test_product", BigDecimal.valueOf(1), LocalDate.now(), false);
+    Product product = new Product(1L, "test_product", BigDecimal.valueOf(1), LocalDate.of(2020, 12, 20), false);
     Product other = new Product(2L, "second_product", BigDecimal.valueOf(10), LocalDate.now(), false);
 
     Form form = new Form("new_product", BigDecimal.valueOf(25));
@@ -54,6 +54,15 @@ class ProductsControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("test_product"));
+    }
+
+    @Test
+    public void datesAreFormattedCorrectly() throws Exception {
+        when(repository.findById(product.getId())).thenReturn(Optional.of(product));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(String.format("/rest/products/%d", product.getId()))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.created_at").value("2020-12-20"));
     }
 
     @Test
