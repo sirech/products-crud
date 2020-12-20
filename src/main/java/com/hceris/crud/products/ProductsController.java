@@ -5,15 +5,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.vavr.collection.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping(value = "/rest/products", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,9 +41,7 @@ public class ProductsController {
     @GetMapping("")
     @ApiOperation("Gets all products")
     public ResponseEntity<List<Product>> products() {
-        List<Product> products = StreamSupport
-                .stream(repository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+        List<Product> products = List.ofAll(repository.findAll());
         return ResponseEntity.ok(products);
     }
 

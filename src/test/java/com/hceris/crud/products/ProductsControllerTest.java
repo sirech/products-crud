@@ -1,6 +1,8 @@
 package com.hceris.crud.products;
 
+import com.hceris.crud.CrudApplication;
 import com.hceris.crud.Utils;
+import com.hceris.crud.config.JacksonConfiguration;
 import com.hceris.crud.products.form.Form;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -21,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @WebMvcTest
+@ContextConfiguration(classes = {CrudApplication.class, JacksonConfiguration.class})
 class ProductsControllerTest {
     @Autowired
     MockMvc mockMvc;
