@@ -1,6 +1,5 @@
 package com.hceris.crud.products;
 
-import com.hceris.crud.CrudApplication;
 import com.hceris.crud.Utils;
 import com.hceris.crud.config.JacksonConfiguration;
 import com.hceris.crud.products.form.Form;
@@ -24,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @WebMvcTest
-@ContextConfiguration(classes = {CrudApplication.class, JacksonConfiguration.class})
+@ContextConfiguration(classes = {ProductsController.class, JacksonConfiguration.class})
 class ProductsControllerTest {
     @Autowired
     MockMvc mockMvc;
