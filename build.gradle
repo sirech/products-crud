@@ -1,6 +1,7 @@
 buildscript {
 	ext {
 		swaggerVersion = '3.0.0'
+    vavrVersion = '0.10.3'
 	}
 }
 
@@ -34,6 +35,9 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
+
+  implementation "io.vavr:vavr:$vavrVersion"
+  implementation "io.vavr:vavr-jackson:$vavrVersion"
 
 	implementation "io.springfox:springfox-boot-starter:$swaggerVersion"
 
