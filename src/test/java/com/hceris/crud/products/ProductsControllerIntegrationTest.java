@@ -47,7 +47,7 @@ public class ProductsControllerIntegrationTest {
 
     @Test
     public void create() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("form.json");
+        String rawForm = Utils.getResourceFileAsString("product_form.json");
         mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(rawForm))
@@ -56,7 +56,7 @@ public class ProductsControllerIntegrationTest {
 
     @Test
     public void update() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("form.json");
+        String rawForm = Utils.getResourceFileAsString("product_form.json");
         mockMvc.perform(MockMvcRequestBuilders.put(String.format("/rest/products/%d", 1L))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(rawForm))

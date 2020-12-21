@@ -85,7 +85,7 @@ class ProductsControllerTest {
 
     @Test
     public void createReturns400IfFormInvalid() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("invalid_form.json");
+        String rawForm = Utils.getResourceFileAsString("product_invalid_form.json");
         when(repository.save(any(Product.class))).thenReturn(newProduct);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
@@ -96,7 +96,7 @@ class ProductsControllerTest {
 
     @Test
     public void createCreatesANewProduct() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("form.json");
+        String rawForm = Utils.getResourceFileAsString("product_form.json");
         when(repository.save(any(Product.class))).thenReturn(newProduct);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/rest/products")
@@ -108,7 +108,7 @@ class ProductsControllerTest {
 
     @Test
     public void updateReturns404IfProductDoesntExist() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("form.json");
+        String rawForm = Utils.getResourceFileAsString("product_form.json");
         when(repository.findById(0L)).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.put("/rest/products/0")
@@ -119,7 +119,7 @@ class ProductsControllerTest {
 
     @Test
     public void updateReturns400IfFormInvalid() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("invalid_form.json");
+        String rawForm = Utils.getResourceFileAsString("product_invalid_form.json");
         when(repository.findById(product.getId())).thenReturn(Optional.of(product));
 
         mockMvc.perform(MockMvcRequestBuilders.put(String.format("/rest/products/%d", product.getId()))
@@ -130,7 +130,7 @@ class ProductsControllerTest {
 
     @Test
     public void updateChangesAProduct() throws Exception {
-        String rawForm = Utils.getResourceFileAsString("form.json");
+        String rawForm = Utils.getResourceFileAsString("product_form.json");
         when(repository.findById(product.getId())).thenReturn(Optional.of(product));
 
         mockMvc.perform(MockMvcRequestBuilders.put(String.format("/rest/products/%d", product.getId()))
