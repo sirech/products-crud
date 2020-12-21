@@ -22,4 +22,14 @@ class OrdersRepositoryTest {
         Iterable<Order> orders = repository.findAllByEmail("consumer@gmail.com");
         assertThat(orders).isNotEmpty();
     }
+
+    @Test
+    void createInsertsANewOrder() {
+        long count = repository.count();
+        repository.save(new Order.OrderBuilder()
+                .email("test@gmail.com")
+                .build()
+        );
+        assertThat(repository.count()).isEqualTo(count + 1);
+    }
 }
