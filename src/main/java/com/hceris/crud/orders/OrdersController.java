@@ -14,15 +14,15 @@ import org.springframework.web.util.UriUtils;
 @RestController
 @RequestMapping(value = "/rest/users/{email}/orders", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrdersController {
-    private OrdersRepository repository;
+    private OrdersService service;
 
-    public OrdersController(@Autowired OrdersRepository repository) {
-        this.repository = repository;
+    public OrdersController(@Autowired OrdersService service) {
+        this.service = service;
     }
 
     @GetMapping("")
     @ApiOperation("Gets all orders")
     public ResponseEntity<List<Order>> orders(@PathVariable String email) {
-        return ResponseEntity.ok(List.ofAll(repository.findAllByEmail(UriUtils.decode(email, "UTF-8"))));
+        return ResponseEntity.ok(List.ofAll(service.findAllByEmail(UriUtils.decode(email, "UTF-8"))));
     }
 }

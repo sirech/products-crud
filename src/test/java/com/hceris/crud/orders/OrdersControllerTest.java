@@ -22,19 +22,18 @@ class OrdersControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    OrdersRepository repository;
+    OrdersService service;
 
     Order order = new Order(1L, "consumer@gmail.com");
     Order secondOrder = new Order(2L, "consumer@gmail.com");
 
     @Test
     public void ordersReturnsAListOfOrders() throws Exception {
-        when(repository.findAllByEmail(order.getEmail())).thenReturn(Arrays.asList(order, secondOrder));
+        when(service.findAllByEmail(order.getEmail())).thenReturn(Arrays.asList(order, secondOrder));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/rest/users/consumer%40gmail.com/orders")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].email").value("consumer@gmail.com"));
     }
-
 }
